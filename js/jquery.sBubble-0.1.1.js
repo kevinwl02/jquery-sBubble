@@ -42,27 +42,38 @@
         //position the tooltip
         self.setPosition();
 
+        // Open events
+        self.$elm.on('click', function(e) {
+            openBox();
+        });
 
-        self.$elm.hover(
-            function () {
-                self.$box.css('display', 'block');
+        // Close events
+        var i = 0;
+        for(i = 0; i < options.closeIds.length; i++) {
+            $('#' + options.closeIds[i]).on('click', function(e) {
+                closeBox();
+            });
+        }
+
+        function openBox() {
+            self.$box.css('display', 'block');
                 self.$arw.css('display', 'block');
 
                 setTimeout(function () {
                     self.$box.addClass('visible');
                     self.$arw.addClass('visible');
                 }, 50);
-            },
-            function () {
-                self.$box.removeClass('visible');
+        }
+
+        function closeBox() {
+            self.$box.removeClass('visible');
                 self.$arw.removeClass('visible');
 
                 setTimeout(function () {
                     self.$box.css('display', 'none');
                     self.$arw.css('display', 'none');
                 }, 100);
-            }
-        );
+        }
 
     }; //end Bubble
 
@@ -142,7 +153,8 @@
             leftOffset : 0,
             topOffset  : 0,
             position   : 'top',
-            theme      : 'black'
+            theme      : 'black',
+            closeIds    : [],
         }, options);
 
         options.width = typeof options.width === 'string' ? parseInt(options.width, 10) : options.width;
